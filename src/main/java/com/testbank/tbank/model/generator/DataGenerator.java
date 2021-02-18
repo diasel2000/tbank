@@ -39,7 +39,7 @@ public class DataGenerator {
             accountRepositoryGenerator.setData(Account::setAccountNum, DataType.NUMBER_UP_TO_1000);
             accountRepositoryGenerator.setData(Account::setType, DataType.WORD);
             accountRepositoryGenerator.setData(Account::setBalance, DataType.NUMBER_UP_TO_1000);
-            accountRepository.saveAll(accountRepositoryGenerator.create(100, seed));
+            accountRepository.saveAll(accountRepositoryGenerator.create(0, seed));
 
             logger.info("... generating 100 Register entities...");
             ExampleDataGenerator<Register> registerRepositoryGenerator = new ExampleDataGenerator<>(Register.class,
@@ -52,7 +52,7 @@ public class DataGenerator {
             registerRepositoryGenerator.setData(Register::setAmount, DataType.NUMBER_UP_TO_1000);
             registerRepositoryGenerator.setData(Register::setClientPayer, DataType.NUMBER_UP_TO_100);
             registerRepositoryGenerator.setData(Register::setClientRecipient, DataType.NUMBER_UP_TO_100);
-            registerRepository.saveAll(registerRepositoryGenerator.create(100, seed));
+            registerRepository.saveAll(registerRepositoryGenerator.create(0, seed));
 
             logger.info("Generated demo data");
         };

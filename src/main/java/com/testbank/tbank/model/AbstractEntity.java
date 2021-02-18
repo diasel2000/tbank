@@ -1,16 +1,16 @@
 package com.testbank.tbank.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
 
     @Id
-    @GeneratedValue
+    @Column(name = "ID")
     private String id;
 
+    @SequenceGenerator(name = "seq-gen", sequenceName = "MY_SEQ_GEN", initialValue = 205, allocationSize = 12)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq-gen")
     public String getId() {
         return id;
     }

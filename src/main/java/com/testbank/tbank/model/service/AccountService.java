@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.artur.helpers.CrudService;
 
+import java.util.Set;
+
 @Service
 public class AccountService extends CrudService<Account, Integer> {
 
@@ -20,4 +22,8 @@ public class AccountService extends CrudService<Account, Integer> {
         return repository;
     }
 
+    public void save(Set<Account> accountSet) {
+        if (!accountSet.isEmpty())
+            getRepository().saveAll(accountSet);
+    }
 }

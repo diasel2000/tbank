@@ -45,7 +45,10 @@ public class CreateClientView extends Div {
 
         cancel.addClickListener(e -> clearForm());
         save.addClickListener(e -> {
-            clientService.saveClient(firstName.getValue(),lastName.getValue());
+            Client client = new Client();
+            client.setFirstName(firstName.getValue());
+            client.setLastName(lastName.getValue());
+            clientService.saveClient(client);
             Notification.show("Person details stored.");
             clearForm();
         });

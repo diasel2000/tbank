@@ -8,25 +8,12 @@ import java.util.Set;
 @Data
 public class ClientRequest {
 
-    /**
-     *
-     */
     private String id;
 
-    /**
-     *
-     */
     private String firstName;
 
-    /**
-     *
-     */
     private String lastName;
 
-    /**
-     *
-     */
     private Set<Account> accaunts;
-
 
 }
