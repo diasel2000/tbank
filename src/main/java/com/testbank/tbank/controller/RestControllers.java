@@ -1,5 +1,8 @@
 package com.testbank.tbank.controller;
 
+import com.testbank.tbank.exceptions.ClientNotFoundException;
+import com.testbank.tbank.exceptions.EntryNotFoundException;
+import com.testbank.tbank.exceptions.NoContentException;
 import com.testbank.tbank.model.entity.Account;
 import com.testbank.tbank.model.entity.Client;
 import com.testbank.tbank.model.service.AccountRepository;
@@ -15,7 +18,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/")
-public class ClientRestController {
+public class RestControllers {
 
     @Autowired
     private ClientService clientService;
@@ -24,9 +27,15 @@ public class ClientRestController {
     public @ResponseBody
     ClientResponse register(@Validated @RequestBody ClientRequest request) throws Exception {
 
-        if (request.getFirstName() == null || request.getLastName() == null) {
-            throw new Exception("Null field");
-        }
+        if (request == null)
+            throw new NoContentException("Invalid request body");
+
+        if (request.getFirstName() == null || request.getLastName() == null)
+            throw new ClientNotFoundException("Fields must not be empty");
+
+        if (request.getAccaunts().isEmpty())
+            throw new EntryNotFoundException("The client must have at least one account");
+
         Client client = clientService.saveClient(getClient(request.getId(), request.getFirstName(), request.getLastName(), request.getAccaunts()));
         ClientResponse response = new ClientResponse();
         response.setClientId(client.getId());
