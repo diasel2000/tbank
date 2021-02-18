@@ -6,6 +6,8 @@ import javax.persistence.*;
 public abstract class AbstractEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
     @Column(name = "ID")
     private String id;
 

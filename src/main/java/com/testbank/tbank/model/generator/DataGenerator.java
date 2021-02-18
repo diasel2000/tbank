@@ -35,7 +35,7 @@ public class DataGenerator {
             ExampleDataGenerator<Account> accountRepositoryGenerator = new ExampleDataGenerator<>(Account.class,
                     LocalDateTime.of(2021, 2, 18, 0, 0, 0));
             accountRepositoryGenerator.setData(Account::setId, DataType.WORD);
-            accountRepositoryGenerator.setData(Account::setAccountId, DataType.WORD);
+            accountRepositoryGenerator.setData(Account::setId, DataType.WORD);
             accountRepositoryGenerator.setData(Account::setAccountNum, DataType.NUMBER_UP_TO_1000);
             accountRepositoryGenerator.setData(Account::setType, DataType.WORD);
             accountRepositoryGenerator.setData(Account::setBalance, DataType.NUMBER_UP_TO_1000);
