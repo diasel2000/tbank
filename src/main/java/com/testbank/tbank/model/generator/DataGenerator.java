@@ -46,9 +46,9 @@ public class DataGenerator {
                     LocalDateTime.of(2021, 2, 18, 0, 0, 0));
             registerRepositoryGenerator.setData(Register::setId, DataType.WORD);
             registerRepositoryGenerator.setData(Register::setPaymentId, DataType.NUMBER_UP_TO_100);
-            registerRepositoryGenerator.setData(Register::setTimestamp, DataType.DATE_OF_BIRTH);
-            registerRepositoryGenerator.setData(Register::setSorceId, DataType.NUMBER_UP_TO_100);
-            registerRepositoryGenerator.setData(Register::setDestId, DataType.NUMBER_UP_TO_100);
+            registerRepositoryGenerator.setData(Register::setTimestamp, DataType.WORD);
+            registerRepositoryGenerator.setData(Register::setSorceId, DataType.WORD);
+            registerRepositoryGenerator.setData(Register::setDestId, DataType.WORD);
             registerRepositoryGenerator.setData(Register::setAmount, DataType.NUMBER_UP_TO_1000);
             registerRepositoryGenerator.setData(Register::setClientPayer, DataType.NUMBER_UP_TO_100);
             registerRepositoryGenerator.setData(Register::setClientRecipient, DataType.NUMBER_UP_TO_100);

@@ -32,4 +32,8 @@ public class AccountService extends CrudService<Account, String> {
     public List<Account> getAccountsByClientId(String clientId){
         return repository.getAccountsByClient_Id(clientId);
     }
+
+    public Account findById(String accountId){
+        return repository.getAccountById(accountId);
+    }
 }

@@ -28,7 +28,7 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 
-@Route(value = "register", layout = MainView.class)
+@Route(value = "registers", layout = MainView.class)
 @PageTitle("Register")
 @CssImport("./styles/views/register/register-view.css")
 public class RegisterView extends Div {

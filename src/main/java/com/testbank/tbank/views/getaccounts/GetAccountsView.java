@@ -27,7 +27,7 @@ import com.testbank.tbank.views.main.MainView;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 
-@Route(value = "account", layout = MainView.class)
+@Route(value = "accounts", layout = MainView.class)
 @PageTitle("Get Accounts")
 @CssImport("./styles/views/getaccounts/get-accounts-view.css")
 public class GetAccountsView extends Div {

@@ -17,7 +17,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.testbank.tbank.views.main.MainView;
 
-@Route(value = "payment", layout = MainView.class)
+@Route(value = "payments", layout = MainView.class)
 @PageTitle("Create Payment")
 @CssImport("./styles/views/createpayment/create-payment-view.css")
 public class CreatePaymentView extends Div {

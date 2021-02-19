@@ -12,9 +12,9 @@ import java.time.LocalDate;
 public class Register extends AbstractEntity {
 
     private Integer paymentId;
-    private LocalDate timestamp;
-    private Integer sorceId;
-    private Integer destId;
+    private String timestamp;
+    private String sorceId;
+    private String destId;
     private Integer amount;
     private Integer clientPayer;
     private Integer clientRecipient;
@@ -25,22 +25,22 @@ public class Register extends AbstractEntity {
     public void setPaymentId(Integer paymentId) {
         this.paymentId = paymentId;
     }
-    public LocalDate getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
-    public void setTimestamp(LocalDate timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
-    public Integer getSorceId() {
+    public String getSorceId() {
         return sorceId;
     }
-    public void setSorceId(Integer sorceId) {
+    public void setSorceId(String sorceId) {
         this.sorceId = sorceId;
     }
-    public Integer getDestId() {
+    public String getDestId() {
         return destId;
     }
-    public void setDestId(Integer destId) {
+    public void setDestId(String destId) {
         this.destId = destId;
     }
     public Integer getAmount() {

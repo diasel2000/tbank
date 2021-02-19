@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ClientRepository extends JpaRepository<Client, Integer> {
-    @Query(value = "insert into client values (:clientId, :accId, :firstName, :lastName)", nativeQuery = true)
-    Client save(@Param("clientId") String id, @Param("accId") String accId, @Param("firstName")String firstName, @Param("lastName")String lastName);
 
     Client findById(String clientId);
 

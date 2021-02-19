@@ -59,7 +59,7 @@ public class CreateClientView extends Div {
     }
 
     private Component createTitle() {
-        return new H3("Personal information");
+        return new H3("Create client");
     }
 
     private Component createFormLayout() {

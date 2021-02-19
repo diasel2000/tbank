@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.artur.helpers.CrudService;
 
+import java.util.Date;
+
 @Service
 public class RegisterService extends CrudService<Register, Integer> {
 
@@ -20,4 +22,7 @@ public class RegisterService extends CrudService<Register, Integer> {
         return repository;
     }
 
+    public Register createPayment(Register register) {
+        return repository.save(register);
+    }
 }

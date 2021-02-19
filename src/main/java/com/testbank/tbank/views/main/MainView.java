@@ -87,8 +87,10 @@ public class MainView extends AppLayout {
     }
 
     private Component[] createMenuItems() {
-        return new Tab[]{createTab("Create Client", CreateClientView.class),
-                createTab("Create Payment", CreatePaymentView.class), createTab("Get Accounts", GetAccountsView.class),
+        return new Tab[]{
+                createTab("Create Client", CreateClientView.class),
+                createTab("Create Payment", CreatePaymentView.class),
+                createTab("Get Accounts", GetAccountsView.class),
                 createTab("Register", RegisterView.class)};
     }
 
