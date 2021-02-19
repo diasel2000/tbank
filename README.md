@@ -33,3 +33,7 @@ You can now also attach breakpoints in code for debugging purposes, by clicking 
 
 ### Task 1
 ![](https://raw.githubusercontent.com/diasel2000/tbank/master/src/main/resources/META-INF/resources/images/task1.bmp)
+
+
+### Task 2
+![](https://raw.githubusercontent.com/diasel2000/tbank/master/src/main/resources/META-INF/resources/images/Task2.png)
