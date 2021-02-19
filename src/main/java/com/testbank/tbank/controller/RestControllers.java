@@ -2,11 +2,14 @@ package com.testbank.tbank.controller;
 
 import com.testbank.tbank.controller.request.AccountRequest;
 import com.testbank.tbank.controller.request.ClientRequest;
+import com.testbank.tbank.controller.request.JurnalRequest;
 import com.testbank.tbank.controller.request.RegisterRequest;
 import com.testbank.tbank.controller.response.AccountResponse;
 import com.testbank.tbank.controller.response.ClientResponse;
+import com.testbank.tbank.controller.response.JurnalResponse;
 import com.testbank.tbank.controller.response.RegisterResponse;
 import com.testbank.tbank.exceptions.*;
+import com.testbank.tbank.mapper.Mapper;
 import com.testbank.tbank.model.entity.Account;
 import com.testbank.tbank.model.entity.Client;
 import com.testbank.tbank.model.entity.Register;
@@ -35,6 +38,9 @@ public class RestControllers {
     @Autowired
     private RegisterService registerService;
 
+    @Autowired
+    private Mapper mapper;
+
     @RequestMapping(path = "/register", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ClientResponse register(@Validated @RequestBody ClientRequest request) throws Exception {
@@ -48,7 +54,7 @@ public class RestControllers {
         if (request.getAccaunts().isEmpty())
             throw new EntryNotFoundException("The client must have at least one account");
 
-        Client client = clientService.saveClient(mapClient(request.getId(), request.getFirstName(), request.getLastName(), request.getAccaunts()));
+        Client client = clientService.saveClient(mapper.mapClient(request.getId(), request.getFirstName(), request.getLastName(), request.getAccaunts()));
         ClientResponse response = new ClientResponse();
         response.setClientId(client.getId());
         return response;
@@ -65,7 +71,7 @@ public class RestControllers {
         if (clientService.findById(request.getClientId()) != null)
             accounts = accountService.getAccountsByClientId(request.getClientId());
 
-        List<AccountResponse> response = mapAccount(accounts);
+        List<AccountResponse> response = mapper.mapAccount(accounts);
         return response;
     }
 
@@ -80,60 +86,21 @@ public class RestControllers {
         if (accountService.findById(request.getSorceId()) == null || accountService.findById(request.getDestId()) == null)
             throw new EntryInconsistencyException("Account not found");
 
-        addAmount(request.getSorceId(), -request.getAmount());
-        addAmount(request.getDestId(), request.getAmount());
-        Register register = registerService.createPayment(mapRegister(String.valueOf(date), request.getSorceId(), request.getDestId(), request.getAmount()));
+        mapper.addAmount(request.getSorceId(), -request.getAmount());
+        mapper.addAmount(request.getDestId(), request.getAmount());
+        Register register = registerService.createPayment(mapper.mapRegister(String.valueOf(date), request.getSorceId(), request.getDestId(), request.getAmount()));
         RegisterResponse response = new RegisterResponse();
         response.setPaymentId(register.getId());
         return response;
     }
 
-    //TODO extract to mapper
-    private List<AccountResponse> mapAccount(List<Account> accounts) {
-        List<AccountResponse> responseList = new LinkedList<>();
-        for (Account account : accounts) {
-            AccountResponse accountResponse = new AccountResponse();
-            accountResponse.setId(account.getId());
-            accountResponse.setAccountNum(account.getAccountNum());
-            accountResponse.setType(account.getType());
-            accountResponse.setBalance(account.getBalance());
-            responseList.add(accountResponse);
-        }
-        return responseList;
-    }
+    @RequestMapping(path = "/jurnal", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    JurnalResponse jurnal(@Validated @RequestBody JurnalRequest request) throws Exception {
+        //TODO implement validation
 
-    private Client mapClient(String id, String firstName, String lastName, Set<Account> accaunts) {
-        Client client = new Client();
-        client.setId(id);
-        client.setFirstName(firstName);
-        client.setLastName(lastName);
-        for (Account account : accaunts) {
-            client.addAccount(account);
-        }
-        return client;
+        JurnalResponse response = new JurnalResponse();
+        //response.setPaymentId(register.getId());
+        return response;
     }
-
-    private Register mapRegister(String s, String sorceId, String destId, Integer amount){
-        Register register = new Register();
-        register.setTimestamp(s);
-        register.setSorceId(sorceId);
-        register.setDestId(destId);
-        register.setAmount(amount);
-        return register;
-    }
-
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void addAmount(String id, Integer amount) throws BankTransactionException {
-        Account account = accountService.findById(id);
-        if (account == null) {
-            throw new BankTransactionException("Account not found " + id);
-        }
-        Integer newBalance = account.getBalance() + amount;
-        if (account.getBalance() + amount < 0) {
-            throw new BankTransactionException(
-                    "The money in the account '" + id + "' is not enough (" + account.getBalance() + ")");
-        }
-        account.setBalance(newBalance);
-    }
-
 }

@@ -1,7 +1,9 @@
 package com.testbank.tbank.views.createpayment;
 
 import com.testbank.tbank.model.entity.Client;
+import com.testbank.tbank.model.entity.Register;
 import com.testbank.tbank.model.service.ClientService;
+import com.testbank.tbank.model.service.RegisterService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -11,6 +13,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
@@ -24,15 +27,15 @@ public class CreatePaymentView extends Div {
 
     private TextField sourceAccId = new TextField("Source");
     private TextField destAccId = new TextField("Dest");
-    private TextField amount = new TextField("Amount");
-    private TextField occupation = new TextField("Occupation");
+    private IntegerField amount = new IntegerField("Amount");
+    private TextField occupation = new TextField("Date");
 
     private Button cancel = new Button("Cancel");
     private Button save = new Button("Save");
 
     private Binder<Client> binder = new Binder(Client.class);
 
-    public CreatePaymentView(ClientService clientService) {
+    public CreatePaymentView(RegisterService registerService) {
         addClassName("create-payment-view");
 
         add(createTitle());
@@ -44,8 +47,13 @@ public class CreatePaymentView extends Div {
 
         cancel.addClickListener(e -> clearForm());
         save.addClickListener(e -> {
-            clientService.update(binder.getBean());
-            Notification.show("Person details stored.");
+            Register register = new Register();
+            register.setAmount(amount.getValue());
+            register.setDestId(destAccId.getValue());
+            register.setSorceId(sourceAccId.getValue());
+            register.setTimestamp(occupation.getValue());
+            registerService.createPayment(register);
+            Notification.show("Payment compleat.");
             clearForm();
         });
     }
