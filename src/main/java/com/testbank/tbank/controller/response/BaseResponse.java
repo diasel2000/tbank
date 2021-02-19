@@ -1,4 +1,4 @@
-package com.testbank.tbank.controller;
+package com.testbank.tbank.controller.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

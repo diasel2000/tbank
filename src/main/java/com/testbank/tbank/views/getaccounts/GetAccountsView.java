@@ -62,14 +62,14 @@ public class GetAccountsView extends Div {
         grid.addColumn("accountNum").setAutoWidth(true);
         grid.addColumn("type").setAutoWidth(true);
         grid.addColumn("balance").setAutoWidth(true);
-        grid.setDataProvider(new CrudServiceDataProvider<>(accountService));
+        //grid.setDataProvider(new CrudServiceDataProvider<>(accountService));
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
         grid.setHeightFull();
 
         // when a row is selected or deselected, populate form
         grid.asSingleSelect().addValueChangeListener(event -> {
             if (event.getValue() != null) {
-                Optional<Account> accountFromBackend = accountService.get(Integer.valueOf(event.getValue().getId()));
+                Optional<Account> accountFromBackend = accountService.get(event.getValue().getId());
                 // when a row is selected but the data is no longer available, refresh grid
                 if (accountFromBackend.isPresent()) {
                     populateForm(accountFromBackend.get());

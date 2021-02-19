@@ -1,6 +1,5 @@
 package com.testbank.tbank.model.service;
 
-import com.testbank.tbank.controller.ClientRequest;
 import com.testbank.tbank.model.entity.Client;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,10 @@ public class ClientService extends CrudService<Client, Integer> {
         client.setId(idGenrate());
         client.setAccId(idGenrate());
         return repository.save(client);
+    }
+
+    public Client findById(String id) {
+        return repository.findById(id);
     }
 
     private String idGenrate() {

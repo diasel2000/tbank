@@ -1,5 +1,6 @@
-package com.testbank.tbank.controller;
+package com.testbank.tbank.controller.response;
 
+import com.testbank.tbank.controller.response.BaseResponse;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

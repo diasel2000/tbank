@@ -1,4 +1,4 @@
-package com.testbank.tbank.controller;
+package com.testbank.tbank.controller.request;
 
 import com.testbank.tbank.model.entity.Account;
 import lombok.Data;

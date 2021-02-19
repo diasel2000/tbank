@@ -4,6 +4,11 @@ import com.testbank.tbank.model.entity.Account;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AccountRepository extends JpaRepository<Account, Integer> {
+import java.util.ArrayList;
+import java.util.List;
+
+public interface AccountRepository extends JpaRepository<Account, String> {
+
+     List<Account> getAccountsByClient_Id(String clientId);
 
 }
