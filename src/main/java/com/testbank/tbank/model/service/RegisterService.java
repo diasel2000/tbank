@@ -25,4 +25,8 @@ public class RegisterService extends CrudService<Register, Integer> {
     public Register createPayment(Register register) {
         return repository.save(register);
     }
+
+    public Register findPaymentBySourceIdAndDestId(String sourceId, String destId) {
+        return repository.findRegisterBySorceIdAndDestId(sourceId,destId);
+    }
 }

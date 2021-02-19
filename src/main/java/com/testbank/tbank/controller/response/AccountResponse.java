@@ -1,15 +1,20 @@
 package com.testbank.tbank.controller.response;
 
-import com.testbank.tbank.model.entity.Account;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 public class AccountResponse extends BaseResponse {
+
+    @JsonView(BaseResponse.class)
     private String id;
+
+    @JsonView(BaseResponse.class)
     private Integer accountNum;
+
+    @JsonView(BaseResponse.class)
     private String type;
+
+    @JsonView(BaseResponse.class)
     private Integer balance;
 }

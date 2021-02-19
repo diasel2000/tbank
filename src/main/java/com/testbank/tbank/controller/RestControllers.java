@@ -23,10 +23,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @RestController
 @RequestMapping("/")
+@Validated
 public class RestControllers {
 
     @Autowired
@@ -81,9 +83,9 @@ public class RestControllers {
         Date date = new Date();
 
         if (request.getDestId().isEmpty() || request.getSorceId().isEmpty())
-            throw new InvalidInputException("Account id's can't be null");
+            throw new InvalidInputException("Account id's mustn't be null");
 
-        if (accountService.findById(request.getSorceId()) == null || accountService.findById(request.getDestId()) == null)
+        if (accountService.findById(request.getSorceId()) == null && accountService.findById(request.getDestId()) == null)
             throw new EntryInconsistencyException("Account not found");
 
         mapper.addAmount(request.getSorceId(), -request.getAmount());
@@ -97,10 +99,29 @@ public class RestControllers {
     @RequestMapping(path = "/jurnal", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     JurnalResponse jurnal(@Validated @RequestBody JurnalRequest request) throws Exception {
-        //TODO implement validation
-
+        String payerId = request.getPayerId();
+        String recipientId = request.getRecipientId();
+        String sourceId = request.getSourceId();
+        String destId = request.getDestId();
         JurnalResponse response = new JurnalResponse();
-        //response.setPaymentId(register.getId());
+        List<Client> clients = new LinkedList<>();
+
+        if (payerId.isEmpty() && recipientId.isEmpty() && sourceId.isEmpty() && destId.isEmpty()) {
+            throw new NoContentException("in jurnal id: " + payerId + " " + recipientId + " " + sourceId + " " + destId);
+        }
+
+        if (clientService.findById(payerId) != null &&
+                clientService.findById(recipientId) != null &&
+                accountService.findById(sourceId) != null &&
+                accountService.findById(destId) != null) {
+            Client payer = clientService.findById(payerId);
+            Client recipient = clientService.findById(recipientId);
+            clients.add(mapper.mapClient(payer.getId(),payer.getFirstName(),payer.getLastName(),new HashSet<>()));
+            clients.add(mapper.mapClient(recipient.getId(),recipient.getFirstName(),recipient.getLastName(),new HashSet<>()));
+            response.setClients(clients);
+            response.setRegister(registerService.findPaymentBySourceIdAndDestId(sourceId, destId));
+        }
+
         return response;
     }
 }
